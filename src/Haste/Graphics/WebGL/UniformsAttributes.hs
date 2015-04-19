@@ -10,11 +10,11 @@ import Haste.JSArray.Typed
 import Haste.Graphics.WebGL.Types
 import Haste.Graphics.WebGL.ProgramsShaders
 
-newtype AttribInfo = AttribInfo JSAny deriving (Pack, Unpack)
-newtype AttribLocation = AttribLocation JSAny deriving (Pack, Unpack)
+newtype AttribInfo = AttribInfo JSAny deriving (FromAny, ToAny)
+newtype AttribLocation = AttribLocation JSAny deriving (FromAny, ToAny)
 
-newtype UniformInfo = UniformInfo JSAny deriving (Pack, Unpack)
-newtype UniformLocation = UniformLocation JSAny deriving (Pack, Unpack)
+newtype UniformInfo = UniformInfo JSAny deriving (FromAny, ToAny)
+newtype UniformLocation = UniformLocation JSAny deriving (FromAny, ToAny)
 
 -- webgl doesn't support fixed
 data VertexAttribType = Byte | Short | UnsignedByte | UnsignedShort | FloatVAType
@@ -33,11 +33,11 @@ instance Enum VertexAttribType where
   toEnum 0x1406 = FloatVAType
   toEnum _ = undefined
 
-instance Pack VertexAttribType where
-  pack = toEnum . pack
+instance FromAny VertexAttribType where
+  fromAny = toEnum . fromAny
 
-instance Unpack VertexAttribType where
-  unpack = unpack . fromEnum
+instance ToAny VertexAttribType where
+  toAny = toAny . fromEnum
 
 data VertexAttrPName = CurrentVertexAttrib | VertexAttribArrayBufferBinding |
                        VertexAttribArrayEnabled | VertexAttribArraySize |
@@ -62,11 +62,11 @@ instance Enum VertexAttrPName where
   toEnum 0x886a = VertexAttribArrayNormalized
   toEnum _ = undefined
 
-instance Pack VertexAttrPName where
-  pack = toEnum . pack
+instance FromAny VertexAttrPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack VertexAttrPName where
-  unpack = unpack . fromEnum
+instance ToAny VertexAttrPName where
+  toAny = toAny . fromEnum
 
 disableVertexAttribArray::Context->AttribLocation->IO ()
 disableVertexAttribArray = ffi "(function(ctx, index) {ctx.disableVertexAttribArray(index);})"

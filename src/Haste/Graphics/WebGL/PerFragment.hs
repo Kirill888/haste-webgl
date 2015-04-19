@@ -20,11 +20,11 @@ instance Enum BlendMode where
   toEnum 0x800b = FuncReverseSubtract
   toEnum _ = undefined
 
-instance Pack BlendMode where
-  pack = toEnum . pack
+instance FromAny BlendMode where
+  fromAny = toEnum . fromAny
 
-instance Unpack BlendMode where
-  unpack = unpack . fromEnum
+instance ToAny BlendMode where
+  toAny = toAny . fromEnum
 
 data SourceFactor = SFactorZero | SFactorOne | SFactorSrcColor |
                     SFactorOneMinusSrcColor | SFactorDstColor |
@@ -68,11 +68,11 @@ instance Enum SourceFactor where
   toEnum 0x8004 = SFactorOneMinusConstantAlpha
   toEnum _ = undefined
 
-instance Pack SourceFactor where
-  pack = toEnum . pack
+instance FromAny SourceFactor where
+  fromAny = toEnum . fromAny
 
-instance Unpack SourceFactor where
-  unpack = unpack . fromEnum
+instance ToAny SourceFactor where
+  toAny = toAny . fromEnum
 
 data DestFactor = DFactorZero | DFactorOne | DFactorSrcColor |
                   DFactorOneMinusSrcColor | DFactorDstColor |
@@ -114,11 +114,11 @@ instance Enum DestFactor where
   toEnum 0x8004 = DFactorOneMinusConstantAlpha
   toEnum _ = undefined
 
-instance Pack DestFactor where
-  pack = toEnum . pack
+instance FromAny DestFactor where
+  fromAny = toEnum . fromAny
 
-instance Unpack DestFactor where
-  unpack = unpack . fromEnum
+instance ToAny DestFactor where
+  toAny = toAny . fromEnum
 
 data DepthFunc = DepthNever | DepthAlways | DepthLess | DepthEqual | DepthLequal |
                  DepthGreater | DepthGequal | DepthNotEqual
@@ -143,11 +143,11 @@ instance Enum DepthFunc where
   toEnum 0x205 = DepthNotEqual
   toEnum _ = undefined
 
-instance Pack DepthFunc where
-  pack = toEnum . pack
+instance FromAny DepthFunc where
+  fromAny = toEnum . fromAny
 
-instance Unpack DepthFunc where
-  unpack = unpack . fromEnum
+instance ToAny DepthFunc where
+  toAny = toAny . fromEnum
 
 data StencilFunc = StencilNever | StencilAlways | StencilLess | StencilLequal |
                    StencilEqual | StencilNotEqual | StencilGreater | StencilGequal
@@ -172,11 +172,11 @@ instance Enum StencilFunc where
   toEnum 0x206 = StencilGequal
   toEnum _ = undefined
 
-instance Pack StencilFunc where
-  pack = toEnum . pack
+instance FromAny StencilFunc where
+  fromAny = toEnum . fromAny
 
-instance Unpack StencilFunc where
-  unpack = unpack . fromEnum
+instance ToAny StencilFunc where
+  toAny = toAny . fromEnum
 
 data StencilFail = FailKeep | FailZero | FailReplace | FailIncr | FailDecr |
                    FailInvert | FailIncrWrap | FailDecrWrap
@@ -201,11 +201,11 @@ instance Enum StencilFail where
   toEnum 0x8508 = FailDecrWrap
   toEnum _ = undefined
 
-instance Pack StencilFail where
-  pack = toEnum . pack
+instance FromAny StencilFail where
+  fromAny = toEnum . fromAny
 
-instance Unpack StencilFail where
-  unpack = unpack . fromEnum
+instance ToAny StencilFail where
+  toAny = toAny . fromEnum
 
 blendColor::Context->Double->Double->Double->Double->IO ()
 blendColor = ffi "(function(ctx, red, green, blue, alpha) {ctx.blendColor(red, green, blue, alpha);})"

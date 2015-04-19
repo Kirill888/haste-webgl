@@ -17,13 +17,13 @@ instance Enum StencilFace where
   toEnum 0x405 = Back
   toEnum 0x408 = FrontAndBack
 
-instance Pack StencilFace where
-  pack = toEnum . pack
+instance FromAny StencilFace where
+  fromAny = toEnum . fromAny
 
-instance Unpack StencilFace where
-  unpack = unpack . fromEnum
+instance ToAny StencilFace where
+  toAny = toAny . fromEnum
 
-newtype Context = Context JSAny deriving (Pack, Unpack)
+newtype Context = Context JSAny deriving (FromAny, ToAny)
 
 data DrawMode = Points | LineStrip | LineLoop | Lines |
                 TriangleStrip | TriangleFan | Triangles
@@ -46,11 +46,11 @@ instance Enum DrawMode where
   toEnum 0x4 = Triangles
   toEnum _ = undefined
 
-instance Pack DrawMode where
-  pack = toEnum . pack
+instance FromAny DrawMode where
+  fromAny = toEnum . fromAny
 
-instance Unpack DrawMode where
-  unpack = unpack . fromEnum
+instance ToAny DrawMode where
+  toAny = toAny . fromEnum
 
 data ElementType = EltUnsignedByte | EltUnsignedShort
 
@@ -62,8 +62,8 @@ instance Enum ElementType where
   toEnum 0x1403 = EltUnsignedShort
   toEnum _ = undefined
 
-instance Pack ElementType where
-  pack = toEnum . pack
+instance FromAny ElementType where
+  fromAny = toEnum . fromAny
 
-instance Unpack ElementType where
-  unpack = unpack . fromEnum
+instance ToAny ElementType where
+  toAny = toAny . fromEnum

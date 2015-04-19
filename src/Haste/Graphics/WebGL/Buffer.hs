@@ -19,13 +19,13 @@ instance Enum BufferTarget where
   toEnum 0x8893 = ElementArrayBufferTarget
   toEnum _ = undefined
 
-instance Pack BufferTarget where
-  pack = toEnum . pack
+instance FromAny BufferTarget where
+  fromAny = toEnum . fromAny
 
-instance Unpack BufferTarget where
-  unpack = unpack . fromEnum
+instance ToAny BufferTarget where
+  toAny = toAny . fromEnum
 
-newtype Buffer = Buffer JSAny deriving (Pack, Unpack)
+newtype Buffer = Buffer JSAny deriving (FromAny, ToAny)
 
 data BufferUsage = StaticDraw | StreamDraw | DynamicDraw
 
@@ -39,11 +39,11 @@ instance Enum BufferUsage where
   toEnum 0x88e8 = DynamicDraw
   toEnum _ = undefined
 
-instance Pack BufferUsage where
-  pack = toEnum . pack
+instance FromAny BufferUsage where
+  fromAny = toEnum . fromAny
 
-instance Unpack BufferUsage where
-  unpack = unpack . fromEnum
+instance ToAny BufferUsage where
+  toAny = toAny . fromEnum
 
 data BufferPName = BufferSize | BufferUsage
 
@@ -55,11 +55,11 @@ instance Enum BufferPName where
   toEnum 0x8765 = BufferUsage
   toEnum _ = undefined
 
-instance Pack BufferPName where
-  pack = toEnum . pack
+instance FromAny BufferPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack BufferPName where
-  unpack = unpack . fromEnum
+instance ToAny BufferPName where
+  toAny = toAny . fromEnum
 
 bindBuffer::Context->BufferTarget->Buffer->IO ()
 bindBuffer = ffi "(function(ctx, target, buffer) {ctx.bindBuffer(target, buffer);})"

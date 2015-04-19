@@ -8,7 +8,7 @@ import Haste.Prim
 
 import Haste.Graphics.WebGL.Types
 
-newtype Texture = Uniform JSAny deriving (Pack, Unpack)
+newtype Texture = Uniform JSAny deriving (FromAny, ToAny)
 
 data TextureEnum = TextureEnum Int
 
@@ -18,11 +18,11 @@ instance Enum TextureEnum where
     | v >= 0x84c0 && v < 0x84e0 = TextureEnum (v - 0x84c0)
     | otherwise = undefined
 
-instance Pack TextureEnum where
-  pack = toEnum . pack
+instance FromAny TextureEnum where
+  fromAny = toEnum . fromAny
 
-instance Unpack TextureEnum where
-  unpack = unpack . fromEnum
+instance ToAny TextureEnum where
+  toAny = toAny . fromEnum
 
 data TextureType = Texture2D | TextureCubeMap
 
@@ -34,11 +34,11 @@ instance Enum TextureType where
   toEnum 0x8513 = TextureCubeMap
   toEnum _ = undefined
 
-instance Pack TextureType where
-  pack = toEnum . pack
+instance FromAny TextureType where
+  fromAny = toEnum . fromAny
 
-instance Unpack TextureType where
-  unpack = unpack . fromEnum
+instance ToAny TextureType where
+  toAny = toAny . fromEnum
 
 data TextureTarget = Texture2DTarget | TextureCubeMapPositiveX |
                      TextureCubeMapPositiveY | TextureCubeMapPositiveZ |
@@ -63,11 +63,11 @@ instance Enum TextureTarget where
   toEnum 0x851a = TextureCubeMapNegativeZ
   toEnum _ = undefined
 
-instance Pack TextureTarget where
-  pack = toEnum . pack
+instance FromAny TextureTarget where
+  fromAny = toEnum . fromAny
 
-instance Unpack TextureTarget where
-  unpack = unpack . fromEnum
+instance ToAny TextureTarget where
+  toAny = toAny . fromEnum
 
 data TextureFormat = Alpha | Luminance | LuminanceAlpha | RGB | RGBA
 
@@ -85,11 +85,11 @@ instance Enum TextureFormat where
   toEnum 0x1908 = RGBA
   toEnum _ = undefined
 
-instance Pack TextureFormat where
-  pack = toEnum . pack
+instance FromAny TextureFormat where
+  fromAny = toEnum . fromAny
 
-instance Unpack TextureFormat where
-  unpack = unpack . fromEnum
+instance ToAny TextureFormat where
+  toAny = toAny . fromEnum
 
 data TextureEltType = TexEltUnsignedByte | UnsignedShort565 |
                       UnsignedShort4444 | UnsignedShort5551
@@ -106,11 +106,11 @@ instance Enum TextureEltType where
   toEnum 0x8034 = UnsignedShort5551
   toEnum _ = undefined
 
-instance Pack TextureEltType where
-  pack = toEnum . pack
+instance FromAny TextureEltType where
+  fromAny = toEnum . fromAny
 
-instance Unpack TextureEltType where
-  unpack = unpack . fromEnum
+instance ToAny TextureEltType where
+  toAny = toAny . fromEnum
 
 data TexPName = TextureWrapS | TextureWrapT |
                 TextureMinFilter | TextureMagFilter
@@ -127,11 +127,11 @@ instance Enum TexPName where
   toEnum 0x2800 = TextureMagFilter
   toEnum _ = undefined
 
-instance Pack TexPName where
-  pack = toEnum . pack
+instance FromAny TexPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack TexPName where
-  unpack = unpack . fromEnum
+instance ToAny TexPName where
+  toAny = toAny . fromEnum
 
 data TextureFilter = Nearest | Linear | NearestMipmapNearest |
                      LinearMipmapNearest | NearestMipmapLinear |
@@ -153,11 +153,11 @@ instance Enum TextureFilter where
   toEnum 0x2703 = LinearMipmapLinear
   toEnum _ = undefined
 
-instance Pack TextureFilter where
-  pack = toEnum . pack
+instance FromAny TextureFilter where
+  fromAny = toEnum . fromAny
 
-instance Unpack TextureFilter where
-  unpack = unpack . fromEnum
+instance ToAny TextureFilter where
+  toAny = toAny . fromEnum
 
 activeTexture::Context->TextureEnum->IO ()
 activeTexture = ffi "(function(ctx, texture) {ctx.activeTexture(texture);})"

@@ -34,11 +34,11 @@ instance Enum Capability where
   toEnum 0xb90 = StencilTest
   toEnum _ = undefined
 
-instance Pack Capability where
-  pack = toEnum . pack
+instance FromAny Capability where
+  fromAny = toEnum . fromAny
 
-instance Unpack Capability where
-  unpack = unpack . fromEnum
+instance ToAny Capability where
+  toAny = toAny . fromEnum
 
 data GLError = OutOfMemory | InvalidEnum | InvalidOperation |
                InvalidFramebufferOperation | InvalidValue |
@@ -62,11 +62,11 @@ instance Enum GLError where
   toEnum 0x9242 = ContextLostWebGL
   toEnum _ = undefined
 
-instance Pack GLError where
-  pack = toEnum . pack
+instance FromAny GLError where
+  fromAny = toEnum . fromAny
 
-instance Unpack GLError where
-  unpack = unpack . fromEnum
+instance ToAny GLError where
+  toAny = toAny . fromEnum
 
 data GLParameter = AlphaBits | RedBits | GreenBits | BlueBits | SubpixelBits |
                    ActiveTexture | AliasedLineWidthRange | AliasedPointSizeRange |
@@ -83,7 +83,7 @@ data GLParameter = AlphaBits | RedBits | GreenBits | BlueBits | SubpixelBits |
                    MaxCubeMapTextureSize | MaxRenderbufferSize |
                    MaxTextureSize | MaxVaryingVectors | MaxVertexAttribs |
                    MaxVertexTextureImageUnits | MaxVertexUniformVectors |
-                   MaxViewportDims | PackAlignmentParam | PolygonOffsetFactor |
+                   MaxViewportDims | FromAnyAlignmentParam | PolygonOffsetFactor |
                    PolygonOffsetFillParam | PolygonOffsetUnits |
                    RenderbufferBinding | Renderer | SampleBuffers |
                    SampleCoverageInvert | SampleCoverageValue | Samples |
@@ -95,8 +95,8 @@ data GLParameter = AlphaBits | RedBits | GreenBits | BlueBits | SubpixelBits |
                    StencilPassDepthFail | StencilPassDepthPass |
                    StencilBackPassDepthFail | StencilBackPassDepthPass |
                    TextureBinding2D | TextureBindingCubeMap |
-                   UnpackAlignmentParam | UnpackColorspaceConversionWebGLParam |
-                   UnpackFlipYWebGLParam | UnpackPremultiplyAlphaWebGLParam | Vendor |
+                   ToAnyAlignmentParam | ToAnyColorspaceConversionWebGLParam |
+                   ToAnyFlipYWebGLParam | ToAnyPremultiplyAlphaWebGLParam | Vendor |
                    Version | Viewport
 
 instance Enum GLParameter where
@@ -145,7 +145,7 @@ instance Enum GLParameter where
   fromEnum MaxVertexTextureImageUnits = 0x8b4c
   fromEnum MaxVertexUniformVectors = 0x8dfb
   fromEnum MaxViewportDims = 0xd3a
-  fromEnum PackAlignmentParam = 0xd05
+  fromEnum FromAnyAlignmentParam = 0xd05
   fromEnum PolygonOffsetFactor = 0x8038
   fromEnum PolygonOffsetFillParam = 0x8037
   fromEnum PolygonOffsetUnits = 0x2a00
@@ -177,10 +177,10 @@ instance Enum GLParameter where
   fromEnum StencilBackPassDepthPass = 0x8803
   fromEnum TextureBinding2D = 0x8069
   fromEnum TextureBindingCubeMap = 0x8514
-  fromEnum UnpackAlignmentParam = 0xcf5
-  fromEnum UnpackColorspaceConversionWebGLParam = 0x9243
-  fromEnum UnpackFlipYWebGLParam = 0x9240
-  fromEnum UnpackPremultiplyAlphaWebGLParam = 0x9241
+  fromEnum ToAnyAlignmentParam = 0xcf5
+  fromEnum ToAnyColorspaceConversionWebGLParam = 0x9243
+  fromEnum ToAnyFlipYWebGLParam = 0x9240
+  fromEnum ToAnyPremultiplyAlphaWebGLParam = 0x9241
   fromEnum Vendor = 0x1f00
   fromEnum Version = 0x1f02
   fromEnum Viewport = 0xba2
@@ -230,7 +230,7 @@ instance Enum GLParameter where
   toEnum 0x8b4c = MaxVertexTextureImageUnits
   toEnum 0x8dfb = MaxVertexUniformVectors
   toEnum 0xd3a = MaxViewportDims
-  toEnum 0xd05 = PackAlignmentParam
+  toEnum 0xd05 = FromAnyAlignmentParam
   toEnum 0x8038 = PolygonOffsetFactor
   toEnum 0x8037 = PolygonOffsetFillParam
   toEnum 0x2a00 = PolygonOffsetUnits
@@ -262,20 +262,20 @@ instance Enum GLParameter where
   toEnum 0x8803 = StencilBackPassDepthPass
   toEnum 0x8069 = TextureBinding2D
   toEnum 0x8514 = TextureBindingCubeMap
-  toEnum 0xcf5 = UnpackAlignmentParam
-  toEnum 0x9243 = UnpackColorspaceConversionWebGLParam
-  toEnum 0x9240 = UnpackFlipYWebGLParam
-  toEnum 0x9241 = UnpackPremultiplyAlphaWebGLParam
+  toEnum 0xcf5 = ToAnyAlignmentParam
+  toEnum 0x9243 = ToAnyColorspaceConversionWebGLParam
+  toEnum 0x9240 = ToAnyFlipYWebGLParam
+  toEnum 0x9241 = ToAnyPremultiplyAlphaWebGLParam
   toEnum 0x1f00 = Vendor
   toEnum 0x1f02 = Version
   toEnum 0xba2 = Viewport
   toEnum _ = undefined
 
-instance Pack GLParameter where
-  pack = toEnum . pack
+instance FromAny GLParameter where
+  fromAny = toEnum . fromAny
 
-instance Unpack GLParameter where
-  unpack = unpack . fromEnum
+instance ToAny GLParameter where
+  toAny = toAny . fromEnum
 
 data HintMode = Fastest | Nicest | DontCare
 
@@ -289,34 +289,34 @@ instance Enum HintMode where
   toEnum 0x1100 = DontCare
   toEnum _ = undefined
 
-instance Pack HintMode where
-  pack = toEnum . pack
+instance FromAny HintMode where
+  fromAny = toEnum . fromAny
 
-instance Unpack HintMode where
-  unpack = unpack . fromEnum
+instance ToAny HintMode where
+  toAny = toAny . fromEnum
 
-data PixelPName = UnpackAlignment | PackAlignment | UnpackFlipYWebGL |
-                  UnpackPremultiplyAlphaWebGL | UnpackColorspaceConversionWebGL
+data PixelPName = ToAnyAlignment | FromAnyAlignment | ToAnyFlipYWebGL |
+                  ToAnyPremultiplyAlphaWebGL | ToAnyColorspaceConversionWebGL
 
 instance Enum PixelPName where
-  fromEnum UnpackAlignment = 0xcf5
-  fromEnum PackAlignment = 0xd05
-  fromEnum UnpackFlipYWebGL = 0x9240
-  fromEnum UnpackPremultiplyAlphaWebGL = 0x9241
-  fromEnum UnpackColorspaceConversionWebGL = 0x9243
+  fromEnum ToAnyAlignment = 0xcf5
+  fromEnum FromAnyAlignment = 0xd05
+  fromEnum ToAnyFlipYWebGL = 0x9240
+  fromEnum ToAnyPremultiplyAlphaWebGL = 0x9241
+  fromEnum ToAnyColorspaceConversionWebGL = 0x9243
 
-  toEnum 0xcf5 = UnpackAlignment
-  toEnum 0xd05 = PackAlignment
-  toEnum 0x9240 = UnpackFlipYWebGL
-  toEnum 0x9241 = UnpackPremultiplyAlphaWebGL
-  toEnum 0x9243 = UnpackColorspaceConversionWebGL
+  toEnum 0xcf5 = ToAnyAlignment
+  toEnum 0xd05 = FromAnyAlignment
+  toEnum 0x9240 = ToAnyFlipYWebGL
+  toEnum 0x9241 = ToAnyPremultiplyAlphaWebGL
+  toEnum 0x9243 = ToAnyColorspaceConversionWebGL
   toEnum _ = undefined
 
-instance Pack PixelPName where
-  pack = toEnum . pack
+instance FromAny PixelPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack PixelPName where
-  unpack = unpack . fromEnum
+instance ToAny PixelPName where
+  toAny = toAny . fromEnum
 
 disable::Context->Capability->IO ()
 disable = ffi "(function(ctx, cap) {ctx.disable(cap);})"

@@ -25,11 +25,11 @@ instance Enum ClearBit where
   toEnum 0x400 = StencilBufferBit
   toEnum v = ClearBitMask v
 
-instance Pack ClearBit where
-  pack = toEnum . pack
+instance FromAny ClearBit where
+  fromAny = toEnum . fromAny
 
-instance Unpack ClearBit where
-  unpack = unpack . fromEnum
+instance ToAny ClearBit where
+  toAny = toAny . fromEnum
 
 instance Bits ClearBit where
   x .|. y = ClearBitMask $ fromEnum x .|. fromEnum y

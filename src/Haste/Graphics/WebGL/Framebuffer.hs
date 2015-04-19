@@ -11,7 +11,7 @@ import System.IO.Unsafe (unsafePerformIO)
 import Haste.Graphics.WebGL.Types
 import Haste.Graphics.WebGL.Texture
 
-newtype Framebuffer = Framebuffer JSAny deriving (Pack, Unpack)
+newtype Framebuffer = Framebuffer JSAny deriving (FromAny, ToAny)
 
 data FramebufferStatus = FramebufferComplete | FramebufferUnsupported |
                          FramebufferIncompleteAttachment |
@@ -32,11 +32,11 @@ instance Enum FramebufferStatus where
   toEnum 0x8cd7 = FramebufferIncompleteMissingAttachment
   toEnum _ = undefined
 
-instance Pack FramebufferStatus where
-  pack = toEnum . pack
+instance FromAny FramebufferStatus where
+  fromAny = toEnum . fromAny
 
-instance Unpack FramebufferStatus where
-  unpack = unpack . fromEnum
+instance ToAny FramebufferStatus where
+  toAny = toAny . fromEnum
 
 data FramebufferAttachment = ColorAttachment0 | DepthAttachment | StencilAttachment
 
@@ -50,11 +50,11 @@ instance Enum FramebufferAttachment where
   toEnum 0x8d20 = StencilAttachment
   toEnum _ = undefined
 
-instance Pack FramebufferAttachment where
-  pack = toEnum . pack
+instance FromAny FramebufferAttachment where
+  fromAny = toEnum . fromAny
 
-instance Unpack FramebufferAttachment where
-  unpack = unpack . fromEnum
+instance ToAny FramebufferAttachment where
+  toAny = toAny . fromEnum
 
 data FramebufferAttachmentPName = FramebufferAttachmentObjectType |
                                   FramebufferAttachmentObjectName |
@@ -73,11 +73,11 @@ instance Enum FramebufferAttachmentPName where
   toEnum 0x8cd3 = FramebufferAttachmentTextureCubeMapFace
   toEnum _ = undefined
 
-instance Pack FramebufferAttachmentPName where
-  pack = toEnum . pack
+instance FromAny FramebufferAttachmentPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack FramebufferAttachmentPName where
-  unpack = unpack . fromEnum
+instance ToAny FramebufferAttachmentPName where
+  toAny = toAny . fromEnum
 
 noFramebuffer::Framebuffer
 noFramebuffer = unsafePerformIO (ffi "(function() {return null;})"::IO Framebuffer)

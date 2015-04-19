@@ -8,9 +8,9 @@ import Haste.Prim
 
 import Haste.Graphics.WebGL.Types
 
-newtype Program = Program JSAny deriving (Pack, Unpack)
+newtype Program = Program JSAny deriving (FromAny, ToAny)
 
-newtype Shader = Shader JSAny deriving (Pack, Unpack)
+newtype Shader = Shader JSAny deriving (FromAny, ToAny)
 
 data ShaderType = VertexShader | FragmentShader
 
@@ -22,11 +22,11 @@ instance Enum ShaderType where
   toEnum 0x8b30 = FragmentShader
   toEnum _ = undefined
 
-instance Pack ShaderType where
-  pack = toEnum . pack
+instance FromAny ShaderType where
+  fromAny = toEnum . fromAny
 
-instance Unpack ShaderType where
-  unpack = unpack . fromEnum
+instance ToAny ShaderType where
+  toAny = toAny . fromEnum
 
 data ProgramPName = ProgramDeleteStatus | LinkStatus | ValidateStatus |
                     AttachedShaders | ActiveAttributes | ActiveUniforms
@@ -47,11 +47,11 @@ instance Enum ProgramPName where
   toEnum 0x8b86 = ActiveUniforms
   toEnum _ = undefined
 
-instance Pack ProgramPName where
-  pack = toEnum . pack
+instance FromAny ProgramPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack ProgramPName where
-  unpack = unpack . fromEnum
+instance ToAny ProgramPName where
+  toAny = toAny . fromEnum
 
 data ShaderPName = ShaderTypePName | ShaderDeleteStatus | CompileStatus
 
@@ -65,11 +65,11 @@ instance Enum ShaderPName where
   toEnum 0x8b81 = CompileStatus
   toEnum _ = undefined
 
-instance Pack ShaderPName where
-  pack = toEnum . pack
+instance FromAny ShaderPName where
+  fromAny = toEnum . fromAny
 
-instance Unpack ShaderPName where
-  unpack = unpack . fromEnum
+instance ToAny ShaderPName where
+  toAny = toAny . fromEnum
 
 
 attachShader::Context->Program->Shader->IO ()

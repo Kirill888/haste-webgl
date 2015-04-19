@@ -18,11 +18,11 @@ instance Enum FaceDirection where
   toEnum 0x901 = CCW
   toEnum _ = undefined
 
-instance Pack FaceDirection where
-  pack = toEnum . pack
+instance FromAny FaceDirection where
+  fromAny = toEnum . fromAny
 
-instance Unpack FaceDirection where
-  unpack = unpack . fromEnum
+instance ToAny FaceDirection where
+  toAny = toAny . fromEnum
 
 cullFace::Context->StencilFace->IO ()
 cullFace = ffi "(function(ctx, mode) {ctx.cullFace(mode);})"

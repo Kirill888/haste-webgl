@@ -9,7 +9,7 @@ import Haste.Graphics.WebGL.UniformsAttributes (AttribLocation)
 import Haste.Graphics.WebGL.Types
 
 -- | An ANGLE_instanced_arrays-enabled webgl context object
-newtype Extension = Extension JSAny deriving (Pack, Unpack)
+newtype Extension = Extension JSAny deriving (FromAny, ToAny)
 
 getExtension::Context->IO Extension
 getExtension = ffi "(function(ctx) {return ctx.getExtension(\"ANGLE_INSTANCED_ARRAYS\");})"

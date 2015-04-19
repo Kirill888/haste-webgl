@@ -155,9 +155,11 @@ drawScene gl (pIdx, mvIdx) time buffers attribs = do
   setMatrixUniforms gl (pIdx, mvIdx) (pmat, rotated)
   drawElements gl Triangles 36 EltUnsignedShort 0
 
-forever delay m = m >> setTimeout delay (Main.forever delay m)
 
-main = setTimeout 100 $ do
+forever delay m = setTimer (Once delay) $ Main.forever delay m >> m
+
+main :: IO ()
+main = do
   let root = documentBody
   canvas <- newElem "canvas"
   setAttr canvas "width" "640"
@@ -169,8 +171,6 @@ main = setTimeout 100 $ do
   buffers <- initBuffers gl
 
   enable gl DepthTest
-
-  ref <- newIORef (0, 0)::IO (IORef (Double, Double))
 
   Main.forever (floor $ 1000/60) $ do
     clearColor gl 0 0 0 1

@@ -91,7 +91,7 @@ drawScene gl (pIdx, mvIdx) (triVerticesBuffer, sqVerticesBuffer) posAttrib = do
   setMatrixUniforms gl (pIdx, mvIdx) (pmat, mvmat)
   drawArrays gl TriangleStrip 0 4
 
-forever delay m = m >> setTimeout delay (Main.forever delay m)
+forever delay m = setTimer (Once delay) (Main.forever delay m) >> m
 
 main = do
   let root = documentBody
